@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements SwipeRefreshLayout.OnRefreshListener{
 
     private static RecyclerView.Adapter adapter;
     public static Activity ac;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private static ArrayList<AppInfo> data;
     private static ArrayList<AppInfo> datai;
     private Switch toggle;
+    private SwipeRefreshLayout swipeRefreshLayout;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -56,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         datai = new ArrayList<AppInfo>();
 
         recyclerView = (RecyclerView) findViewById(R.id.app_list);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
         toggle = (Switch) findViewById(R.id.toggle);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -185,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 recyclerView.setAdapter(adapter);
             }
             progressBar.dismiss();
+            swipeRefreshLayout.setRefreshing(false);
             super.onPostExecute(aVoid);
 
         }
@@ -215,6 +220,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    @Override
+    public void onRefresh() {
+        if (toggle.isChecked() == true) {
+            new loadlist(true).execute();
+        } else {
+            new loadlist(false).execute();
+        }
+
+    }
+
 
 
 

@@ -1,12 +1,14 @@
 package rushabh.apk.extracter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,7 +43,7 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHo
     public static String PATH = Environment.getExternalStorageDirectory() + "/APK-Extract";
     private Context mContext;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 
         TextView name;
         TextView package_name;
@@ -53,6 +56,11 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHo
             this.package_name = (TextView) itemView.findViewById(R.id.package_name);
             this.image = (ImageView) itemView.findViewById(R.id.image);
             this.option = (CardView) itemView.findViewById(R.id.card_view);
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            return false;
         }
     }
 
@@ -81,12 +89,60 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHo
         holder.image.setBackground(app.getApp_image());
 
         holder.option.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 getApk(app.getPackage_name());
             }
         });
 
+        holder.option.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View view) {
+
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(mContext);
+                builderSingle.setIcon(app.getApp_image());
+                builderSingle.setTitle(app.getApp_name());
+
+                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                        mContext,
+                        android.R.layout.simple_list_item_1);
+                arrayAdapter.add("Share");
+                arrayAdapter.add("App Info");
+
+                builderSingle.setAdapter(
+                        arrayAdapter,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String strName = arrayAdapter.getItem(which);
+
+                                if(which == 0){
+                                    try {
+                                        PackageManager pm = mContext. getPackageManager();
+                                        ApplicationInfo ai = pm.getApplicationInfo(app.getPackage_name(), 0);
+                                        File srcFile = new File(ai.publicSourceDir);
+                                        Intent share = new Intent();
+                                        share.setAction(Intent.ACTION_SEND);
+                                        share.setType("application/vnd.android.package-archive");
+                                        share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(srcFile));
+                                       mContext.startActivity(Intent.createChooser(share, "Share "+app.getApp_name()));
+                                    } catch (Exception e) {
+                                        Log.e("ShareApp", e.getMessage());
+                                    }
+                                } else {
+                                    Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                    intent.setData(Uri.parse("package:" + app.getPackage_name()));
+                                   mContext. startActivity(intent);
+                                }
+                            }
+                        });
+                builderSingle.show();
+
+                return false;
+            }
+        });
     }
 
     @Override

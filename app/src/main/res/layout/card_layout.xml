@@ -19,11 +19,13 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:padding="8dp"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="60dp"
+                android:layout_marginLeft="5dp"
+                android:layout_height="60dp"
                 android:id="@+id/image" />
 
             <TextView
@@ -36,7 +38,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:text="Appliction Name"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_toRightOf="@+id/image"/>
 
             <TextView
@@ -48,7 +50,7 @@
                 android:singleLine="true"
                 android:layout_marginRight="10dp"
                 android:text="Appliction Name"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_below="@+id/name"
                 android:layout_toRightOf="@+id/image"/>
 
