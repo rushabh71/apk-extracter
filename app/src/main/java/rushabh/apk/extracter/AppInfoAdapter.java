@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +46,8 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHo
     private ArrayList<AppInfo> dataSet;
     private Context mContext;
     String PATH;
+
+
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 
@@ -70,6 +74,7 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHo
         this.mContext = c;
         this.dataSet = data;
     }
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent,

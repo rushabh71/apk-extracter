@@ -17,11 +17,13 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.Filter;
 import android.widget.Switch;
 
 import com.google.android.gms.appindexing.Action;
@@ -266,16 +268,33 @@ public class MainActivity extends AppCompatActivity  implements SwipeRefreshLayo
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(Menu.NONE, 1, Menu.NONE, "Settings");
-        menu.add(Menu.NONE, 2, Menu.NONE, "About Me");
-        menu.add(Menu.NONE, 3, Menu.NONE, "Exit");
+
+        getMenuInflater().inflate(R.menu.popup_menu, menu);
+
+        MenuItem myActionMenuItem = menu.findItem( R.id.action_search);
+        SearchView searchView = (SearchView) myActionMenuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                return false;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
+
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case 2:
+            case R.id.ab:
 
                 AlertDialog.Builder builderSingle = new AlertDialog.Builder(MainActivity.this);
 
@@ -286,13 +305,13 @@ public class MainActivity extends AppCompatActivity  implements SwipeRefreshLayo
 
                 return true;
 
-            case 3:
+            case R.id.et:
 
                 finish();
 
                 return true;
 
-            case 1:
+            case R.id.st:
 
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
 

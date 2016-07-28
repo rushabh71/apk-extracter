@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:title="Share"
-        android:id="@+id/share"/>
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="always|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        android:title="Search"/>
 
     <item
-        android:title="Details"
-        android:id="@+id/details"/>
+        android:title="Settings"
+        android:id="@+id/st"/>
+
+    <item
+        android:title="About"
+        android:id="@+id/ab"/>
+
+    <item
+        android:title="Exit"
+        android:id="@+id/et"/>
 
 </menu>
