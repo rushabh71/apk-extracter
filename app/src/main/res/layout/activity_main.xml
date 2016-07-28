@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="rushabh.apk.extracter.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/system_tray"
+        android:background="@color/colorPrimary"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:text="Show System Apps"
+            android:textSize="15dp"
+            android:paddingTop="15dp"
+            android:textColor="#FFF"
+            android:paddingLeft="10dp"
+            android:layout_height="match_parent" />
+
+        <Switch
+            android:layout_width="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="50dp" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/app_list"
+        android:layout_below="@+id/system_tray">
+
+        </android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>
