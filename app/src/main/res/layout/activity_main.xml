@@ -9,13 +9,13 @@
         android:layout_width="match_parent"
         android:id="@+id/system_tray"
         android:background="@color/colorPrimary"
-        android:layout_height="50dp">
+        android:layout_height="40dp">
 
         <TextView
             android:layout_width="match_parent"
             android:text="Show System Apps"
             android:textSize="15dp"
-            android:paddingTop="15dp"
+            android:paddingTop="10dp"
             android:textColor="#FFF"
             android:paddingLeft="10dp"
             android:layout_height="match_parent" />

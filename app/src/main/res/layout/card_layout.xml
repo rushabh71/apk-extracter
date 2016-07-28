@@ -14,7 +14,7 @@
         card_view:cardBackgroundColor="#FFF"
         android:layout_marginLeft="5dp"
         card_view:cardElevation="1dp"
-        android:padding="5dp"
+        android:padding="10dp"
         card_view:cardUseCompatPadding="true">
 
         <RelativeLayout
@@ -32,7 +32,6 @@
                 android:id="@+id/name"
                 android:textColor="#000"
                 android:layout_marginLeft="10dp"
-                android:layout_toLeftOf="@+id/option"
                 android:singleLine="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
@@ -48,20 +47,11 @@
                 android:layout_marginLeft="10dp"
                 android:singleLine="true"
                 android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@+id/option"
                 android:text="Appliction Name"
                 android:textSize="20dp"
                 android:layout_below="@+id/name"
                 android:layout_toRightOf="@+id/image"/>
 
-            <ImageButton
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:id="@+id/option"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/ic_launcher"/>
 
         </RelativeLayout>
 
