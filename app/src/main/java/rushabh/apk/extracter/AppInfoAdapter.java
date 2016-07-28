@@ -57,7 +57,7 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHo
 
         holder.name.setText(app.getApp_name());
         holder.package_name.setText(app.getPackage_name());
-        Picasso.with(mContext).load(Uri.parse(app.getApp_image())).into(holder.image);
+        holder.image.setBackground(app.getApp_image());
 
     }
 

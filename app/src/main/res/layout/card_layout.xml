@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:tag="cards main container">
 
@@ -10,8 +10,11 @@
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
         card_view:cardBackgroundColor="#FFF"
-        card_view:cardElevation="5dp"
+        android:layout_marginLeft="5dp"
+        card_view:cardElevation="1dp"
+        android:padding="5dp"
         card_view:cardUseCompatPadding="true">
 
         <RelativeLayout
@@ -21,17 +24,18 @@
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:id="@+id/image"
-                android:src="@mipmap/ic_launcher"/>
+                android:id="@+id/image" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/name"
                 android:textColor="#000"
+                android:layout_marginLeft="10dp"
                 android:layout_toLeftOf="@+id/option"
+                android:singleLine="true"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
-                android:padding="5dp"
                 android:text="Appliction Name"
                 android:textSize="20dp"
                 android:layout_toRightOf="@+id/image"/>
@@ -42,8 +46,8 @@
                 android:id="@+id/package_name"
                 android:textColor="#535353"
                 android:layout_marginLeft="10dp"
+                android:singleLine="true"
                 android:layout_marginRight="10dp"
-                android:padding="5dp"
                 android:layout_toLeftOf="@+id/option"
                 android:text="Appliction Name"
                 android:textSize="20dp"
