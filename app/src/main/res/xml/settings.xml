@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="App Settings" >
+        <EditTextPreference
+            android:title="Extraction path"
+            android:summary="/sdcard/Apk-Extract/"
+            android:id="@+id/sd_path"
+            android:defaultValue="/sdcard/Apk-Extract/"
+            android:singleLine="true"
+            android:key="pref_path"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="About Me" >
+        <Preference
+            android:title="Developer"
+            android:key="pref_developer"
+            android:summary="Rushabh Patel"/>
+
+        <Preference
+            android:title="Version"
+            android:key="pref_version"
+            android:summary="1.0.0"/>
+
+
+        <Preference
+            android:title="Contact"
+            android:key="pref_email"
+            android:summary="rushabhp99@gmail.com"/>
+
+        <Preference
+            android:title="Rate this app"
+            android:key="pref_rate"
+            android:summary="Coming soon..."/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

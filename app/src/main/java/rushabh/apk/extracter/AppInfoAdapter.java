@@ -3,11 +3,13 @@ package rushabh.apk.extracter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
@@ -40,8 +42,8 @@ import java.util.List;
 public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHolder> {
 
     private ArrayList<AppInfo> dataSet;
-    public static String PATH = Environment.getExternalStorageDirectory() + "/APK-Extract";
     private Context mContext;
+    String PATH;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
 
@@ -151,17 +153,16 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHo
     }
 
 
-    public void init_direcctory(){
-        File folder = new File(PATH);
-
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-    }
 
     public void getApk(String packagename){
         final PackageManager pm = mContext.getPackageManager();
 //get a list of installed apps.
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        PATH = sharedPref.getString("pref_path", "/sdcard/Apk-Extract/");
+
+        if(PATH == null){
+            PATH = "/sdcard/Apk-Extract/";
+        }
         List<ApplicationInfo> packages =  pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
         for (ApplicationInfo packageInfo : packages) {
@@ -169,11 +170,11 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHo
 
                     Log.d(packageInfo.publicSourceDir, packageInfo.packageName + "    " + PATH + packageInfo.packageName);
                 try {
-                    copyFile(packageInfo.publicSourceDir, PATH + "/" + packageInfo.loadLabel(mContext.getPackageManager()).toString() + ".apk");
+                    copyFile(packageInfo.publicSourceDir, PATH + packageInfo.loadLabel(mContext.getPackageManager()).toString() + ".apk");
                 } catch (Exception e){
 
                 }
-                Toast.makeText(mContext,"APK extracted successfully in\n" +  PATH+"/" + packageInfo.loadLabel(mContext.getPackageManager()).toString()+".apk",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,"APK extracted successfully in\n" + PATH + packageInfo.loadLabel(mContext.getPackageManager()).toString()+".apk",Toast.LENGTH_SHORT).show();
 
             }
         }

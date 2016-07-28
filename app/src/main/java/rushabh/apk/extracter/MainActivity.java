@@ -3,11 +3,13 @@ package rushabh.apk.extracter;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity  implements SwipeRefreshLayo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false);
 
         ac = this;
 
@@ -289,6 +293,8 @@ public class MainActivity extends AppCompatActivity  implements SwipeRefreshLayo
                 return true;
 
             case 1:
+
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
 
                 return true;
 
