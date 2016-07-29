@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -34,15 +35,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity  implements SwipeRefreshLayout.OnRefreshListener{
 
-    private static RecyclerView.Adapter adapter;
+    private  AppInfoAdapter adapter;
     public static Activity ac;
     private RecyclerView.LayoutManager layoutManager;
-    private static RecyclerView recyclerView;
-    private static ArrayList<AppInfo> data;
-    private static ArrayList<AppInfo> datai;
+    private  RecyclerView recyclerView;
+    private ArrayList<AppInfo> data;
+    private ArrayList<AppInfo> datai;
     private Switch toggle;
     private SwipeRefreshLayout swipeRefreshLayout;
     /**
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity  implements SwipeRefreshLayo
         } else {
             new loadlist(false).execute();
         }
+
 
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -252,7 +255,6 @@ public class MainActivity extends AppCompatActivity  implements SwipeRefreshLayo
         }
 
         List<PackageInfo> apps = getPackageManager().getInstalledPackages(0);
-
         for (int i = 0; i < apps.size(); i++) {
             PackageInfo p = apps.get(i);
 
@@ -272,17 +274,18 @@ public class MainActivity extends AppCompatActivity  implements SwipeRefreshLayo
         getMenuInflater().inflate(R.menu.popup_menu, menu);
 
         MenuItem myActionMenuItem = menu.findItem( R.id.action_search);
-        SearchView searchView = (SearchView) myActionMenuItem.getActionView();
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(myActionMenuItem);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(String charText) {
 
                 return false;
             }
             @Override
             public boolean onQueryTextChange(String s) {
-
+                adapter.getFilter().filter(s);
                 return false;
             }
         });
@@ -290,6 +293,7 @@ public class MainActivity extends AppCompatActivity  implements SwipeRefreshLayo
 
 
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

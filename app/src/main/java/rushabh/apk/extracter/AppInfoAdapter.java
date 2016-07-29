@@ -40,16 +40,30 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
-public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHolder> {
+public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHolder> implements Filterable {
 
-    private ArrayList<AppInfo> dataSet;
+    public  ArrayList<AppInfo> dataSet = null;
+    public  ArrayList<AppInfo> filterSet = null;
     private Context mContext;
     String PATH;
 
 
+    public AppInfoAdapter(Context c, ArrayList<AppInfo> data) {
+        this.mContext = c;
+        this.dataSet = data;
+        this.filterSet = data;
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new AppFilter() ;
+    }
+
+
+    public class MyViewHolder extends RecyclerView.ViewHolder  {
 
         TextView name;
         TextView package_name;
@@ -64,15 +78,6 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHo
             this.option = (CardView) itemView.findViewById(R.id.card_view);
         }
 
-        @Override
-        public boolean onLongClick(View view) {
-            return false;
-        }
-    }
-
-    public AppInfoAdapter(Context c, ArrayList<AppInfo> data) {
-        this.mContext = c;
-        this.dataSet = data;
     }
 
 
@@ -158,6 +163,46 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHo
     }
 
 
+    private class AppFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String filterString = constraint.toString().toLowerCase();
+
+            FilterResults results = new FilterResults();
+
+            dataSet = filterSet;
+
+            final ArrayList<AppInfo> list = dataSet;
+
+            int count = list.size();
+            final ArrayList<AppInfo> nlist = new ArrayList<AppInfo>(count);
+
+            String filterableString ;
+
+            for (int i = 0; i < count; i++) {
+                filterableString = list.get(i).getApp_name();
+                if (filterableString.toLowerCase().contains(filterString)) {
+                    nlist.add(list.get(i));
+                }
+            }
+
+            results.values = nlist;
+            results.count = nlist.size();
+            return results;
+
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint,FilterResults results) {
+
+            dataSet = (ArrayList<AppInfo>) results.values;
+            notifyDataSetChanged();
+
+        }
+
+    }
+
 
     public void getApk(String packagename){
         final PackageManager pm = mContext.getPackageManager();
@@ -185,6 +230,7 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.MyViewHo
         }
 
     }
+
 
   public  void copyFile(String s, String d) throws IOException {
       File src = new File(s);
